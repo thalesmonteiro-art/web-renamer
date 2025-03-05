@@ -247,7 +247,7 @@
                 const formatDiv = document.createElement('div');
                 formatDiv.className = 'format-name';
                 formatDiv.textContent = format.name;
-                formatDiv.onclick = () => copyToClipboard(format.name);
+                formatDiv.onclick = () => copyToClipboard(fileName);
                 
                 // Create file name element
                 const fileDiv = document.createElement('div');
@@ -480,7 +480,7 @@
                 const formatDiv = document.createElement('div');
                 formatDiv.className = 'format-name';
                 formatDiv.textContent = lang.name;
-                formatDiv.onclick = () => copyToClipboard(lang.name);
+                formatDiv.onclick = () => copyToClipboard(fileDiv.textContent);
                 
                 // Create file name element
                 const fileDiv = document.createElement('div');
