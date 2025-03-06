@@ -33,6 +33,13 @@
         .form-col {
             flex: 1;
         }
+        .form-col.narrow {
+            width: 150px;
+            flex: 0 0 150px;
+        }
+        .form-col.wide {
+            flex: 1;
+        }
         label {
             display: block;
             margin-bottom: 5px;
@@ -148,22 +155,22 @@
         </div>
         
         <div class="form-row">
-            <div class="form-col">
+            <div class="form-col wide">
                 <label for="concept">Concept name:</label>
                 <input type="text" id="concept" required>
             </div>
-            <div class="form-col">
+            <div class="form-col narrow">
                 <label for="length">Length (seconds):</label>
                 <input type="number" id="length" min="1">
             </div>
         </div>
         
         <div class="form-row">
-            <div class="form-col">
+            <div class="form-col wide">
                 <label for="subconcept">Subconcept (optional):</label>
                 <input type="text" id="subconcept">
             </div>
-            <div class="form-col">
+            <div class="form-col narrow">
                 <label for="revision">Revision (optional):</label>
                 <input type="number" id="revision" min="1">
             </div>
