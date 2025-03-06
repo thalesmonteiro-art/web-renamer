@@ -25,6 +25,14 @@
         .form-group {
             margin-bottom: 15px;
         }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .form-col {
+            flex: 1;
+        }
         label {
             display: block;
             margin-bottom: 5px;
@@ -73,16 +81,18 @@
         .format-name {
             background-color: #4CAF50;
             color: white;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 5px;
             margin: 10px 0 5px 0;
             display: inline-block;
-            cursor: pointer;
+            font-size: 0.7em; /* 30% smaller */
+            cursor: default; /* Non-clickable */
         }
         .file-name {
             margin: 5px 0 15px 0;
             font-family: monospace;
             cursor: pointer;
+            font-size: 1.35em; /* 35% bigger */
         }
         .language-selector {
             margin-top: 15px;
@@ -136,21 +146,27 @@
             <label for="date">Date:</label>
             <input type="date" id="date" required>
         </div>
-        <div class="form-group">
-            <label for="concept">Concept name:</label>
-            <input type="text" id="concept" required>
+        
+        <div class="form-row">
+            <div class="form-col">
+                <label for="concept">Concept name:</label>
+                <input type="text" id="concept" required>
+            </div>
+            <div class="form-col">
+                <label for="length">Length (seconds):</label>
+                <input type="number" id="length" min="1">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="length">Length (seconds):</label>
-            <input type="number" id="length" min="1">
-        </div>
-        <div class="form-group">
-            <label for="subconcept">Subconcept (optional):</label>
-            <input type="text" id="subconcept">
-        </div>
-        <div class="form-group">
-            <label for="revision">Revision (optional):</label>
-            <input type="number" id="revision" min="1">
+        
+        <div class="form-row">
+            <div class="form-col">
+                <label for="subconcept">Subconcept (optional):</label>
+                <input type="text" id="subconcept">
+            </div>
+            <div class="form-col">
+                <label for="revision">Revision (optional):</label>
+                <input type="number" id="revision" min="1">
+            </div>
         </div>
 
         <div class="button-group">
@@ -247,7 +263,7 @@
                 const formatDiv = document.createElement('div');
                 formatDiv.className = 'format-name';
                 formatDiv.textContent = format.name;
-                formatDiv.onclick = () => copyToClipboard(fileName);
+                // Removed onClick for format name
                 
                 // Create file name element
                 const fileDiv = document.createElement('div');
@@ -304,7 +320,7 @@
             const englishFormat = document.createElement('div');
             englishFormat.className = 'format-name';
             englishFormat.textContent = 'English';
-            englishFormat.onclick = () => copyToClipboard('English');
+            // Removed onClick for format name
             
             const englishFileName = `AB2_${formattedDate}_[SIZE]_${concept}${subconcept}${revision}`;
             const englishFileDiv = document.createElement('div');
@@ -371,9 +387,10 @@
 
             const formattedDate = formatDateYYYYMM(dateInput.value);
             const concept = conceptInput.value;
+            const subconcept = subconceptInput.value ? `_${subconceptInput.value}` : '';
             const revision = revisionInput.value ? `_v${revisionInput.value}` : '';
             
-            // For GIF, we ignore length and subconcept, and append "GIF" to the concept name
+            // For GIF, append "GIF" to the concept name and include subconcept
             const conceptGIF = `${concept}GIF`;
             
             // Default languages array with English first and others with checkbox values
@@ -407,7 +424,7 @@
             englishFormat.textContent = 'English';
             englishFormat.onclick = () => copyToClipboard('English');
             
-            const englishFileName = `AB2_${formattedDate}_[SIZE]_${conceptGIF}${revision}`;
+            const englishFileName = `AB2_${formattedDate}_[SIZE]_${conceptGIF}${subconcept}${revision}`;
             const englishFileDiv = document.createElement('div');
             englishFileDiv.className = 'file-name';
             englishFileDiv.textContent = englishFileName;
@@ -480,7 +497,7 @@
                 const formatDiv = document.createElement('div');
                 formatDiv.className = 'format-name';
                 formatDiv.textContent = lang.name;
-                formatDiv.onclick = () => copyToClipboard(fileDiv.textContent);
+                // Removed onClick for format name
                 
                 // Create file name element
                 const fileDiv = document.createElement('div');
@@ -488,12 +505,12 @@
                 
                 const date = formatDateYYYYMM(dateInput.value);
                 const concept = conceptInput.value;
+                const subconcept = subconceptInput.value ? `_${subconceptInput.value}` : '';
                 const revision = revisionInput.value ? `_v${revisionInput.value}` : '';
                 
                 if (type === 'gif') {
-                    fileDiv.textContent = `AB2_${date}_[SIZE]_${concept}GIF${revision}${lang.code}`;
+                    fileDiv.textContent = `AB2_${date}_[SIZE]_${concept}GIF${subconcept}${revision}${lang.code}`;
                 } else {
-                    const subconcept = subconceptInput.value ? `_${subconceptInput.value}` : '';
                     fileDiv.textContent = `AB2_${date}_[SIZE]_${concept}${subconcept}${revision}${lang.code}`;
                 }
                 
